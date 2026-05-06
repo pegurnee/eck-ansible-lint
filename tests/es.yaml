@@ -1,0 +1,57 @@
+apiVersion: elasticsearch.k8s.elastic.co/v1
+kind: Elasticsearch
+metadata:
+  name: xforce-demo
+  namespace: xforce-demo
+spec:
+  version: 8.15.3
+  http:
+    tls:
+      selfSignedCertificate:
+        disabled: true
+  nodeSets:
+    - name: default
+      count: 3
+      volumeClaimTemplates:
+        - metadata:
+            name: elasticsearch-data
+          spec:
+            accessModes:
+              - ReadWriteOnce
+            resources:
+              requests:
+                storage: 60Gi
+            storageClassName: ibmc-vpc-block-5iops-tier
+      config:
+        node.roles: ["master", "ingest"]
+        path:
+          repo:
+            - /usr/share/elasticsearch/repo
+        indices.query.bool.max_clause_count: 3000
+        xpack:
+          license.self_generated.type: basic
+      podTemplate:
+        spec:
+          initContainers:
+            - name: sysctl
+              securityContext:
+                privileged: true
+                runAsUser: 0
+              command: ["sh", "-c", "sysctl -w vm.max_map_count=262144"]
+          containers:
+            - name: elasticsearch
+              env:
+                - name: ES_JAVA_OPTS
+                  value: -Xms1g -Xmx1g
+                - name: DB_HOST
+                  value: "sample-db.databases.appdomain.cloud"
+                - name: DB_PORT
+                  value: "30519"
+                - name: DB_POSTGRESDB_USER
+                  value: fid@ibm.com
+                - name: DB_POSTGRESDB_PASSWORD
+                  value: cGxhaW50ZXh0X3Bhc3N3b3JkCg==
+          volumes:
+            - name: snapshot-data
+              persistentVolumeClaim:
+                claimName: xforce-demo-es-snapshots

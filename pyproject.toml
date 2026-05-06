@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "eck-ansible-lint"
+version = "0.1.0"
+description = "Custom ansible-lint rules for Elastic Cloud on Kubernetes (ECK)"
+authors = [{ name = "Your Org" }]
+requires-python = ">=3.9"
+dependencies = ["ansible-lint>=24.0.0"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[project.entry-points."ansiblelint.rules"]
+eck = "eck_lint.rules"
