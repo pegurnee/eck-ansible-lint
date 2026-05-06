@@ -6,20 +6,12 @@ from pathlib import Path
 
 import yaml
 
-def make_task(definition, module="kubernetes.core.k8s"):
-    return {
-        "action": {"__ansible_module__": module},
-        "args": {"definition": definition},
-    }
-
 def test_interview_yaml():
     PROJECT_DIR = Path(__file__).parent
     path = PROJECT_DIR / "./es.yaml"
 
     with open(path, 'r') as yamlFile:
-        esyaml = yaml.safe_load(yamlFile)
-
-        task = make_task(esyaml)
+        task = yaml.safe_load(yamlFile)
 
         assert ECKNoPlaintextSecrets().matchtask(task) is True
         assert ECKVolumeMountsRequired().matchtask(task) is True

@@ -7,7 +7,7 @@ class ECKMountPaths(AnsibleLintRule):
     version_changed = "0.1.0"
 
     def matchtask(self, task):
-        spec = task.get("args", {}).get("definition", {}).get("spec", {})
+        spec = task.get("spec", {})
 
         for ns in spec.get("nodeSets", []):
             config = ns.get("config", {})

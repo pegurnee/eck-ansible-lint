@@ -9,7 +9,7 @@ class ECKNoPlaintextSecrets(AnsibleLintRule):
     SENSITIVE_KEYS = ["PASSWORD", "SECRET", "TOKEN", "KEY"]
 
     def matchtask(self, task):
-        spec = task.get("args", {}).get("definition", {}).get("spec", {})
+        spec = task.get("spec", {})
 
         for ns in spec.get("nodeSets", []):
             containers = ns.get("podTemplate", {}).get("spec", {}).get("containers", [])

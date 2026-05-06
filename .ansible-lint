@@ -1,0 +1,4 @@
+profile: moderate
+
+rulesdir:
+  - ./src/eck_lint/rules/

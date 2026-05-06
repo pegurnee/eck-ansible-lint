@@ -7,12 +7,8 @@ class ECKRequireDataRole(AnsibleLintRule):
     version_changed = "0.1.0"
     tags = ["kubernetes", "eck"]
 
-    def matchtask(self, task):
-        if task.get("action", {}).get("__ansible_module__") not in ["k8s", "kubernetes.core.k8s"]:
-            return False
-        
-        spec = task.get("args", {}).get("definition", {}).get("spec", {})
-        node_sets = spec.get("nodeSets", [])
+    def matchtask(self, task):        
+        node_sets = task.get("spec", {}).get("nodeSets", [])
 
         for ns in node_sets:
             roles = ns.get("config", {}).get("node.roles", [])

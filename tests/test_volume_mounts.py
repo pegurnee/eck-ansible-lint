@@ -2,10 +2,7 @@ from eck_lint.rules import ECKVolumeMountsRequired
 
 
 def make_task(definition, module="kubernetes.core.k8s"):
-    return {
-        "action": {"__ansible_module__": module},
-        "args": {"definition": definition},
-    }
+    return definition
 
 
 def test_non_k8s_module_returns_false():

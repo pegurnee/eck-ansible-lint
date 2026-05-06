@@ -7,12 +7,8 @@ class ECKVolumeMountsRequired(AnsibleLintRule):
     severity = "HIGH"
     version_changed = "0.1.0"
 
-    def matchtask(self, task, 
-        file: Lintable | None = None):
-        if task.get("action", {}).get("__ansible_module__") not in ["k8s", "kubernetes.core.k8s"]:
-            return False
-
-        spec = task.get("args", {}).get("definition", {}).get("spec", {})
+    def matchtask(self, task):
+        spec = task.get("spec", {})
 
         for ns in spec.get("nodeSets", []):
             pod = ns.get("podTemplate", {}).get("spec", {})

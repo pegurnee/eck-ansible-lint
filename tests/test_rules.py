@@ -1,10 +1,7 @@
 from eck_lint.rules import ECKVolumeMountsRequired
 
 def make_task(definition):
-    return {
-        "action": {"__ansible_module__": "kubernetes.core.k8s"},
-        "args": {"definition": definition},
-    }
+    return definition
 
 def test_missing_mounts_fails():
     rule = ECKVolumeMountsRequired()
