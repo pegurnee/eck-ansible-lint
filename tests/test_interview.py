@@ -1,6 +1,6 @@
 from eck_lint.rules.ECK001_data_role import ECKRequireDataRole
 from eck_lint.rules.ECK002_volume_mounts import ECKVolumeMountsRequired
-from eck_lint.rules.ECK003_snapshot_repo import ECKSnapshotRepoMount
+from eck_lint.rules.ECK003_mount_paths import ECKMountPaths
 from eck_lint.rules.ECK004_secrets import ECKNoPlaintextSecrets
 from pathlib import Path
 
@@ -24,7 +24,7 @@ def test_interview_yaml():
         assert ECKNoPlaintextSecrets().matchtask(task) is True
         assert ECKVolumeMountsRequired().matchtask(task) is True
         assert ECKRequireDataRole().matchtask(task) is True
-        assert ECKSnapshotRepoMount().matchtask(task) is True
+        assert ECKMountPaths().matchtask(task) is True
 
 
 if __name__ == "__main__":

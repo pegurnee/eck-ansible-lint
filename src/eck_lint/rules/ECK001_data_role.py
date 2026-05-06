@@ -11,7 +11,6 @@ class ECKRequireDataRole(AnsibleLintRule):
         if task.get("action", {}).get("__ansible_module__") not in ["k8s", "kubernetes.core.k8s"]:
             return False
         
-        print(task)
         spec = task.get("args", {}).get("definition", {}).get("spec", {})
         node_sets = spec.get("nodeSets", [])
 

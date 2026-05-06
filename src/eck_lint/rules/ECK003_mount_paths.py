@@ -1,6 +1,6 @@
 from ansiblelint.rules import AnsibleLintRule
 
-class ECKSnapshotRepoMount(AnsibleLintRule):
+class ECKMountPaths(AnsibleLintRule):
     id = "ECK003"
     shortdesc = "path.repo must have matching mountPath"
     severity = "HIGH"
